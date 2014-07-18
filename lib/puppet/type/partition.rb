@@ -1,14 +1,13 @@
 # encoding: UTF-8
 require 'easy_type'
 require 'ruby-debug'
+require 'utils/parted'
 
 # @nodoc
 module Puppet
   newtype(:partition) do
     include EasyType
     include EasyType::Helpers
-
-    COLUMNS = ['minor','start','end','size','part_type','fs_type', 'flags', 'label_type', 'device']
 
     desc "create and modify partitions on a disk"
 
@@ -17,33 +16,19 @@ module Puppet
     set_command(:parted)
 
     to_get_raw_resources do
-      @current_device_name = ''
-      @partition_type = ''
-      @in_table = false
-      @return_value = []
-      output = parted '-l units MiB'
-      output.each_line do | line|
-        line && line.chop!
-        end_of_table_filter(line)
-        partition_table_filter(line)
-        table_line_filter(line)
-        device_name_filter(line)
-        start_of_table_filter(line)
-      end
-      @return_value
+      parted = Utils::Parted.new
+      parted.partitions
     end
-
 
     on_create do | command_builder |
       puts 'create'
     end
 
     on_modify do | command_builder|
-      puts 'modify'
     end
 
     on_destroy do |command_builder|
-      puts 'destroy'
+      "#{device} rm #{minor}"
     end
 
     #

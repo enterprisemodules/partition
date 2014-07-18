@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-newproperty(:label_type) do
+newproperty(:ensure) do
 
   include EasyType
   newvalues(
@@ -34,11 +34,7 @@ newproperty(:label_type) do
   EOT
   #
   to_translate_to_resource do | raw_resource|
-    raw_resource.column_data('label_type')
-  end
-
-  on_apply do
-    "mklabel msdos"
+    raw_resource.column_data('type')
   end
 
 end
