@@ -1,6 +1,7 @@
 # encoding: UTF-8
-require 'easy_type'
-require 'ruby-debug'
+require 'pathname'
+$:.unshift(Pathname.new(__FILE__).dirname.parent.parent)
+$:.unshift(Pathname.new(__FILE__).dirname.parent.parent.parent.parent + 'easy_type' + 'lib')
 require 'utils/parted'
 
 # @nodoc
@@ -21,14 +22,15 @@ module Puppet
     end
 
     on_create do | command_builder |
-      puts 'create'
+      "-s #{device} mkpart #{part_type} #{start} #{self[:end]}"
     end
 
     on_modify do | command_builder|
+      "-s #{device}"
     end
 
     on_destroy do |command_builder|
-      "#{device} rm #{minor}"
+      "-s #{device} rm #{minor}"
     end
 
     #
@@ -54,38 +56,5 @@ module Puppet
 		property  :lvm
     # -- end of attributes -- Leave this comment if you want to use the scaffolder
     #
-
-
-    def self.device_name_filter(line)
-      device = line.scan(/^Disk \/dev\/(.*):.*$/).flatten.first
-      @current_device_name = device if device
-    end
-
-    def self.partition_table_filter(line)
-      type = line.scan(/^Partition Table: (.*)$/).flatten.first
-      @partition_type = type if type
-    end
-
-    def self.start_of_table_filter(line)
-      start_of_table = /^Number\s*Start\s*End\s*Size\s*Type\s*File\s*system\s*Flags$/.match(line)
-      @in_table = true if start_of_table
-    end
-
-    def self.end_of_table_filter(line)
-      @in_table = false if @in_table and line == ""
-    end
-
-    def self.table_line_filter(line)
-      if @in_table
-        data = line.scan(/^\s(\S*\s)\s*(\s\S*\s)\s*(\s\S*\s)\s*(\s\S*\s)\s*(\s\S*\s)\s*(\s\S*\s)\s*(\s\S*\s)/).flatten
-        data.map!(&:strip)
-        data << @partition_type << @current_device_name
-        @return_value << EasyType::Helpers::InstancesResults[COLUMNS.zip(data)]
-      end
-    end
-
-
-
-
   end
 end

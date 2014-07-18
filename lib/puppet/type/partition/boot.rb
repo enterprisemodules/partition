@@ -15,11 +15,11 @@ newproperty(:boot) do
 
   to_translate_to_resource do | raw_resource|
     flags = raw_resource.column_data('flags')
-    flags && flags.scan(/boot/).size == 1
+    (flags && flags.scan(/boot/).size == 1).to_s
   end
 
   on_apply do
-    #TODO: make it work
+    "set #{resource[:minor]} boot"
   end
 
 

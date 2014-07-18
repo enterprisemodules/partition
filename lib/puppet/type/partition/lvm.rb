@@ -11,11 +11,11 @@ newproperty(:lvm) do
 
   to_translate_to_resource do | raw_resource|
     flags = raw_resource.column_data('flags')
-    flags && flags.scan(/lvm/).size == 1
+    (flags && flags.scan(/lvm/).size == 1).to_s
   end
 
   on_apply do
-    #TODO: make it work
+    "set #{resource[:minor]} lvm"
   end
 
 

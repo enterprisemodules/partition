@@ -15,7 +15,7 @@ newproperty(:swap) do
   end
 
   on_apply do
-    #TODO: make it work
+    "set #{resource[:minor]} swap"
   end
 
 

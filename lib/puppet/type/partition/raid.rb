@@ -16,7 +16,7 @@ newproperty(:raid) do
   end
 
   on_apply do
-    #TODO: make it work
+    "set #{resource[:minor]} raid"
   end
 
 

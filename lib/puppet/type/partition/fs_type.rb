@@ -6,6 +6,7 @@ newproperty(:fs_type) do
   include EasyType
   newvalues(
     :ext2,
+    :ext3,
     :fat32,
     :fat16,
     :HFS,
@@ -28,7 +29,7 @@ newproperty(:fs_type) do
   end
 
   on_apply do
-    # TODO:
+    "#{resource[:device]} mkfs #{resource[:minor]} #{resource[:fs_type]}"
   end
 
 end

@@ -16,7 +16,7 @@ newproperty(:root) do
   end
 
   on_apply do
-    #TODO: make it work
+    "set #{resource[:minor]} root"
   end
 
 
