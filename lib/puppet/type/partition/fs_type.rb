@@ -25,11 +25,11 @@ newproperty(:fs_type) do
   EOT
   #
   to_translate_to_resource do | raw_resource|
-    raw_resource.column_data('fs_type')
+    raw_resource.column_data('file system')
   end
 
   on_apply do
-    "#{resource[:device]} mkfs #{resource[:minor]} #{resource[:fs_type]}"
+    "mkfs #{resource[:minor]} #{resource[:fs_type]}"
   end
 
 end
