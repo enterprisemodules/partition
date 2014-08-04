@@ -10,7 +10,7 @@ newparam(:name) do
   to_translate_to_resource do | raw_resource|
     device = raw_resource.column_data('device').strip
     minor = raw_resource.column_data('minor').strip
-    "/dev/#{device}:#{minor}"
+    "#{device}:#{minor}"
   end
 
 end

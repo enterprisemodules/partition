@@ -32,7 +32,7 @@ module Puppet
     end
 
     def make_partition_table
-      "-s /dev/#{self[:name]} mklabel #{self[:ensure]}"
+      "-s #{self[:name]} mklabel #{self[:ensure]}"
     end
 
     #
