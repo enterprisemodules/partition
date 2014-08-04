@@ -47,6 +47,7 @@ module Puppet
 		property  :end
 		property  :fs_type
 		property  :part_type
+    property  :part_name
 		property  :boot
 		property  :lba
 		property  :root

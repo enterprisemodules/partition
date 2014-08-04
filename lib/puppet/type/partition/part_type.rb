@@ -16,13 +16,16 @@ newproperty(:part_type) do
     (i.e., non-extended partitions).'
 
   EOT
-  #
+
   to_translate_to_resource do | raw_resource|
-    raw_resource.column_data('part_type')
+    #
+    # type is optionaly available. So check if it is before extracting the column data
+    #
+    raw_resource.column_data('type') if type_available?(raw_resource)
   end
 
-  on_apply do
-    # TODO:
+  def self.type_available?(raw_resource)
+    raw_resource.keys.include?('type')
   end
 
 end

@@ -8,11 +8,15 @@ module Utils
 
     PARTITION_COLUMNS = ['minor','start','end','size','part_type','fs_type', 'flags', 'device']
     TABLE_COLUMNS     = ['device','type']
-    InstancesResults = EasyType::Helpers::InstancesResults
+    TABLE_HEADER      = /^(Number\s*)(Start\s*)(End\s*)(Size\s*)(Type*\s*)*(File\s*system\s*)\s*(Name\s*)*(Flags\s*)$/
+    PARTITION_TABLE   = /^Partition Table: (.*)$/
+    DEVICE_NAME       = /^Disk \/dev\/(.*):.*$/
+    InstancesResults  = EasyType::Helpers::InstancesResults
 
     attr_reader :partitions, :tables
 
     def initialize
+      @partition_columns = []
       @current_device_name = ''
       @partition_type = ''
       @in_table = false
@@ -28,11 +32,9 @@ module Utils
       Puppet::Util::Execution.execute(command)
     end
 
-
     def list
       parted '-l'
     end
-
 
     def parse_output
       unless @parsed
@@ -48,15 +50,15 @@ module Utils
     end
 
     def device_name_filter(line)
-      device = line.scan(/^Disk \/dev\/(.*):.*$/).flatten.first
+      device = line.scan(DEVICE_NAME).flatten.first
       if device
-        @current_device_name = device
+        @current_device_name = "/dev/#{device}"
         @partition_type = nil
       end
     end
 
     def partition_table_filter(line)
-      type = line.scan(/^Partition Table: (.*)$/).flatten.first
+      type = line.scan(PARTITION_TABLE).flatten.first
       if type
         @partition_type = type
         table_data = [@current_device_name, @partition_type]
@@ -65,8 +67,20 @@ module Utils
     end
 
     def start_of_table_filter(line)
-      start_of_table = /^Number\s*Start\s*End\s*Size\s*Type\s*File\s*system\s*Flags$/.match(line)
-      @in_table = true if start_of_table
+      start_of_table = TABLE_HEADER.match(line)
+      if start_of_table
+        @in_table = true
+        @offsets = extract_positions(start_of_table)
+        @partition_columns = normalize_columns(start_of_table)
+      end
+    end
+
+    def extract_positions(match_data)
+      (1..match_data.length-1).map {|n| match_data.offset(n)}
+    end
+
+    def normalize_columns(data)
+      data.captures.map{|e| e.nil? ? '': e}.map(&:downcase).map(&:strip) << 'device'
     end
 
     def end_of_table_filter(line)
@@ -75,11 +89,24 @@ module Utils
 
     def table_line_filter(line)
       if @in_table
-        data = line.scan(/^\s(\S*\s)\s*(\s\S*\s)\s*(\s\S*\s)\s*(\s\S*\s)\s*(\s\S*\s)\s*(\s\S*\s)\s*(\s\S*\s)/).flatten
+        data = extract_content(line)
         data.map!(&:strip)
         data << @current_device_name
-        @partitions << InstancesResults[PARTITION_COLUMNS.zip(data)]
+        @partitions << InstancesResults[@partition_columns.zip(data)]
       end
+    end
+
+    def extract_content(line)
+      data = []
+      @offsets.each do | (begin_pos, end_pos)|
+        if begin_pos.nil?
+          data << ''
+        else
+          length = end_pos - begin_pos
+          data << line.slice(begin_pos, length).strip
+        end
+      end
+      data
     end
   end
 end
