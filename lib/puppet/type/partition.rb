@@ -22,7 +22,8 @@ module Puppet
     end
 
     on_create do | command_builder |
-      "-s #{device} mkpart #{part_type} #{start} #{self[:end]}"
+      parameter = part_type ? part_type : part_name
+      "-s #{device} mkpart #{parameter} #{start} #{self[:end]}"
     end
 
     on_modify do | command_builder|
@@ -47,6 +48,7 @@ module Puppet
 		property  :end
 		property  :fs_type
 		property  :part_type
+    property  :part_name
 		property  :boot
 		property  :lba
 		property  :root
