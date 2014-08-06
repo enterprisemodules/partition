@@ -83,6 +83,19 @@ partition { '/dev/hda:1':
 }
 ```
 
+
+When you add a `gpt` partition, you have to set the partition name. If you specify a `partition_type`, it is simply ignored.
+
+```puppet
+partition { '/dev/hda:1':
+  ensure    => 'present',
+  boot      => 'true',
+  end       => '107MB',
+  part_name => 'my_part',
+  start     => '32.3kB',
+}
+```
+
 This pupet code manages the first partition on /dev/hda. To check what all properties mean, checkout the documentation.
 
 ##Limitations
