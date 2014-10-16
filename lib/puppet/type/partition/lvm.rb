@@ -14,7 +14,7 @@ newproperty(:lvm) do
     (flags && flags.scan(/lvm/).size == 1).to_s
   end
 
-  on_apply do
+  on_apply do | command_builder |
     "set #{resource[:minor]} lvm"
   end
 

@@ -28,7 +28,7 @@ newproperty(:fs_type) do
     raw_resource.column_data('file system')
   end
 
-  on_apply do
+  on_apply do | command_builder |
     "mkfs #{resource[:minor]} #{resource[:fs_type]}"
   end
 

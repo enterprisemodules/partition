@@ -10,8 +10,5 @@ newproperty(:start) do
     raw_resource.column_data('start')
   end
 
-  on_apply do
-    # TODO: Add implementation
-  end
 
 end

@@ -14,9 +14,4 @@ newparam(:minor) do
     raw_resource.column_data('number')
   end
 
-  on_apply do
-    #TODO: make it work
-  end
-
-
 end

@@ -15,7 +15,7 @@ newproperty(:lba) do
     flags && flags.scan(/lba/).size == 1
   end
 
-  on_apply do
+  on_apply do | command_builder |
     "set #{resource[:minor]} lba"
   end
 

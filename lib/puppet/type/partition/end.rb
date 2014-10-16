@@ -10,8 +10,4 @@ newproperty(:end) do
     raw_resource.column_data('end')
   end
 
-  on_apply do
-    # TODO: Add implementation
-  end
-
 end

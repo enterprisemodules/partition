@@ -15,7 +15,7 @@ newproperty(:root) do
     flags && flags.scan(/root/).size == 1
   end
 
-  on_apply do
+  on_apply do | command_builder |
     "set #{resource[:minor]} root"
   end
 
