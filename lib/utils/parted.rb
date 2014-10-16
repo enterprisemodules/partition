@@ -99,7 +99,7 @@ module Utils
     def extract_content(line)
       data = []
       @offsets.each do | (begin_pos, end_pos)|
-        if begin_pos.nil?
+        if begin_pos.nil? || begin_pos >= line.length
           data << ''
         else
           length = end_pos - begin_pos
