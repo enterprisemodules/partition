@@ -1,3 +1,7 @@
+2014-10-16  Release 0.0.3
+- Compatible with ruby 1.9 and higer
+- fixed interpretation of lines with empty last field in partion list
+
 2014-8-06  Release 0.0.2
 - Fixed problems with gpt partitions
 - fixed naming of partition_tables. Now always use the full name (e.g. /dev/sda)

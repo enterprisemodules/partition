@@ -112,6 +112,7 @@ This is an open projects, and contributions are welcome.
 Currently we have tested:
 
 * CentOS 5.8
+* CentOS 6.5
 
 It would be great if we could get it working and tested on:
 
