@@ -7,13 +7,15 @@ newproperty(:fs_type) do
   newvalues(
     :ext2,
     :ext3,
+    :ext4,
     :fat32,
     :fat16,
     :HFS,
     :'linux-swap',
     :NTFS,
     :reiserfs,
-    :ufs
+    :ufs,
+    :xfs
   )
 
   desc <<-EOT
