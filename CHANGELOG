@@ -1,3 +1,6 @@
+2015-02-03  Release 0.0.4
+- automaticaly determine the begin and end parameters to create a partition filling the whole disk
+
 2014-10-16  Release 0.0.3
 - Compatible with ruby 1.9 and higer
 - fixed interpretation of lines with empty last field in partion list
