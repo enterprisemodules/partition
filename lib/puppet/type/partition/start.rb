@@ -10,5 +10,18 @@ newproperty(:start) do
     raw_resource.column_data('start')
   end
 
+  munge do | value |
+    if value.nil?
+      value = first_free_sector
+      Puppet.info "No start defined. Using sector #{value} as start"
+    end
+    value
+  end
+
+  private
+
+  def first_free_sector
+    Puppet::Util::Execution.execute("parted #{resource[:device]} unit s print free |grep 'Free Space' | awk '{print $1}' ").chop
+  end
 
 end

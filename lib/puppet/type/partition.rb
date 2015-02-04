@@ -22,18 +22,8 @@ module Puppet
     end
 
     on_create do | command_builder |
-      if start.nil?
-        start = Puppet::Util::Execution.execute("parted #{device} unit s print free |grep 'Free Space' | awk '{print $1}' ").chop
-        Puppet.info "No start defined. Using sector #{start} as start"
-      end
-
-      if self[:end].nil?
-        self[:end] = Puppet::Util::Execution.execute("parted #{device} unit s print free |grep 'Free Space' | awk '{print $2}' ").chop
-        Puppet.info "No end was defined. Using sector #{self[:end]} as end"
-      end
-
       parameter = part_type ? part_type : part_name
-      "-s #{device} mkpart #{parameter} #{start} #{self[:end]}"
+      "-s #{device} mkpart #{parameter} #{self[:start]} #{self[:end]}"
     end
 
     on_modify do | command_builder|
