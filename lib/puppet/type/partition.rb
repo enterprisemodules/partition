@@ -23,7 +23,7 @@ module Puppet
 
     on_create do | command_builder |
       parameter = part_type ? part_type : part_name
-      "-s #{device} mkpart #{parameter} #{self[:start]} #{self[:end]}"
+      "-s #{device} mkpart #{parameter} #{actual_start} #{actual_end}"
     end
 
     on_modify do | command_builder|
@@ -58,5 +58,35 @@ module Puppet
 		property  :lvm
     # -- end of attributes -- Leave this comment if you want to use the scaffolder
     #
+    private
+
+    def actual_start
+      if self[:start].nil?
+        value = first_free_sector
+        Puppet.info "No start was defined. Using sector #{value} as start"
+        value
+      else
+        self[:start]
+      end
+    end
+
+    def actual_end
+      if self[:end].nil?
+        value = last_free_sector
+        Puppet.info "No end was defined. Using sector #{value} as end"
+        value
+      else
+        self[:end]
+      end
+    end
+
+    def last_free_sector
+      Puppet::Util::Execution.execute("parted #{device} unit s print free |grep 'Free Space' | awk '{print $2}' ").chop
+    end
+
+    def first_free_sector
+      Puppet::Util::Execution.execute("parted #{device} unit s print free |grep 'Free Space' | awk '{print $1}' ").chop
+    end
+
   end
 end
