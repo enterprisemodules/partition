@@ -21,7 +21,7 @@ newproperty(:end) do
   private
 
   def last_free_sector
-    Puppet::Util::Execution.execute("parted #{device} unit s print free |grep 'Free Space' | awk '{print $2}' ").chop
+    Puppet::Util::Execution.execute("parted #{resource[:device]} unit s print free |grep 'Free Space' | awk '{print $2}' ").chop
   end
 
 end
