@@ -16,12 +16,19 @@ module Utils
     attr_reader :partitions, :tables
 
     def initialize
-      @partition_columns = []
-      @current_device_name = ''
-      @partition_type = ''
-      @in_table = false
-      @partitions = []
-      @tables = []
+      reset
+    end
+
+
+    def list
+      reset
+      @output = parted '-l'
+      parse_output
+    end
+
+    def show(device)
+      reset
+      @output= parted device, 'print', {:failonfail => false}
       parse_output
     end
 
@@ -29,16 +36,23 @@ module Utils
 
     def parted(*args)
       command = args.dup.unshift(:parted)
-      Puppet::Util::Execution.execute(command)
+      options = args.last.is_a?(Hash) ? args.last : {}
+      Puppet::Util::Execution.execute(command, options)
     end
 
-    def list
-      parted '-l'
+    def reset
+      @partition_columns = []
+      @current_device_name = ''
+      @partition_type = ''
+      @in_table = false
+      @partitions = []
+      @tables = []
+      @output = ''
     end
 
     def parse_output
       unless @parsed
-        list.each_line do | line|
+        @output.each_line do | line|
           line && line.chop!
           end_of_table_filter(line)
           partition_table_filter(line)

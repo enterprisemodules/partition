@@ -16,11 +16,6 @@ module Puppet
 
     set_command(:parted)
 
-    to_get_raw_resources do
-      parted = Utils::Parted.new
-      parted.partitions
-    end
-
     on_create do | command_builder |
       parameter = part_type ? part_type : part_name
       "-s #{device} mkpart #{parameter} #{actual_start} #{actual_end}"

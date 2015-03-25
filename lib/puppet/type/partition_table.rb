@@ -3,6 +3,7 @@ require 'pathname'
 $:.unshift(Pathname.new(__FILE__).dirname.parent.parent)
 $:.unshift(Pathname.new(__FILE__).dirname.parent.parent.parent.parent + 'easy_type' + 'lib')
 require 'utils/parted'
+require 'utils/multipathd'
 
 # @nodoc
 module Puppet
@@ -17,11 +18,6 @@ module Puppet
       EOT
 
     set_command(:parted)
-
-    to_get_raw_resources do
-      parted = Utils::Parted.new
-      parted.tables
-    end
 
     on_create do | command_builder |
       make_partition_table
