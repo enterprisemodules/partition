@@ -1,3 +1,6 @@
+2015-03-15  Release 0.1.0
+- Added support for a single device provider. This provider allows partitioning of for example mapped devices.
+
 2015-02-04  Release 0.0.6
 - Fix problems introduced by 0.0.5
 

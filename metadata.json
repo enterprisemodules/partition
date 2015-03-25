@@ -1,6 +1,6 @@
 {
   "name": "hajee-partition",
-  "version": "0.0.6",
+  "version": "0.1.0",
   "author": "Bert Hajee",
   "summary": "the custom types needed to manage partitions and partition tables.",
   "license": "Apache-2.0",
