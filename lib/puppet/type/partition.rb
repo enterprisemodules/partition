@@ -3,12 +3,14 @@ require 'pathname'
 $:.unshift(Pathname.new(__FILE__).dirname.parent.parent)
 $:.unshift(Pathname.new(__FILE__).dirname.parent.parent.parent.parent + 'easy_type' + 'lib')
 require 'utils/parted'
+require 'utils/parted_command'
 
 # @nodoc
 module Puppet
   newtype(:partition) do
     include EasyType
     include EasyType::Helpers
+    include Utils::PartedCommand
 
     desc "create and modify partitions on a disk"
 

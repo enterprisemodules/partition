@@ -1,13 +1,12 @@
 # encoding: UTF-8
 require 'easy_type'
-require 'utils/multipathd'
 
-Puppet::Type.type(:partition).provide(:single) do
+Puppet::Type.type(:partition).provide(:parted) do
   include EasyType::Provider
   #
   # No need to add or remove anything here
   #
-  desc 'This is the non prefetching provider for the partition type'
+  desc 'This is parted provider for the partition type'
 
   mk_resource_methods
 
@@ -23,7 +22,11 @@ Puppet::Type.type(:partition).provide(:single) do
   end
 
   def self.instances
-    fail 'the single instance provider doesn\'t support the resource command'
+    parted = Utils::Parted.new
+    parted.list
+    parted.partitions.map do |raw_resource|
+      map_raw_to_resource(raw_resource)
+    end
   end
 
 end

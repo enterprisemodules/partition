@@ -3,19 +3,21 @@ require 'pathname'
 $:.unshift(Pathname.new(__FILE__).dirname.parent.parent)
 $:.unshift(Pathname.new(__FILE__).dirname.parent.parent.parent.parent + 'easy_type' + 'lib')
 require 'utils/parted'
-require 'utils/multipathd'
+require 'utils/parted_command'
+
 
 # @nodoc
 module Puppet
   newtype(:partition_table) do
     include EasyType
+    include Utils::PartedCommand
 
     desc <<-EOT
 
     Manage the partition tables on a disk. A partition table must be available on a disk
     before you can define partitions on it.
 
-      EOT
+    EOT
 
     set_command(:parted)
 

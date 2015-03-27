@@ -2,9 +2,11 @@ require 'pathname'
 $:.unshift(Pathname.new(__FILE__).dirname.parent.parent)
 $:.unshift(Pathname.new(__FILE__).dirname.parent.parent.parent.parent + 'easy_type' + 'lib')
 require 'easy_type'
+require 'utils/parted_command'
 
 module Utils
   class Parted
+    include Utils::PartedCommand
 
     PARTITION_COLUMNS = ['minor','start','end','size','part_type','fs_type', 'flags', 'device']
     TABLE_COLUMNS     = ['device','type']
@@ -28,17 +30,12 @@ module Utils
 
     def show(device)
       reset
-      @output= parted device, 'print', {:failonfail => false}
+      @output= parted device, 'print'
       parse_output
     end
 
     private
 
-    def parted(*args)
-      command = args.dup.unshift(:parted)
-      options = args.last.is_a?(Hash) ? args.last : {}
-      Puppet::Util::Execution.execute(command, options)
-    end
 
     def reset
       @partition_columns = []
