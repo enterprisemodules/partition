@@ -4,19 +4,6 @@
 newproperty(:fs_type) do
 
   include EasyType
-  newvalues(
-    :ext2,
-    :ext3,
-    :ext4,
-    :fat32,
-    :fat16,
-    :HFS,
-    :'linux-swap',
-    :NTFS,
-    :reiserfs,
-    :ufs,
-    :xfs
-  )
 
   desc <<-EOT
 
@@ -31,7 +18,8 @@ newproperty(:fs_type) do
   end
 
   on_apply do | command_builder |
-    "mkfs #{resource[:minor]} #{resource[:fs_type]}"
+    device_name = resource[:name].gsub(':','')
+    command_builder.after("#{device_name} -t #{resource[:fs_type]}", 'mkfs')
   end
 
 end
