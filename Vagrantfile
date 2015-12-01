@@ -5,7 +5,7 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "centos-5.8-x86_64"
+  config.vm.box = "puppetlabs/centos-7.0-64-puppet"
   # config.vm.box_url = "https://dl.dropboxusercontent.com/s/sij0m2qmn02a298/centos-5.8-x86_64.box"
 
   config.vm.synced_folder ".", "/vagrant", :mount_options => ["dmode=777","fmode=777"]
@@ -26,9 +26,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
-  config.vm.provision :shell, :inline => "ln -sf /vagrant /etc/puppet/modules/partition"
-  config.vm.provision :shell, :inline => "puppet resource package ruby-devel ensure=installed"
-  config.vm.provision :shell, :inline => "puppet resource package ruby-debug ensure=installed provider=gem"
+  config.vm.provision :shell, :inline => "ln -sf /vagrant //etc/puppetlabs/code/modules/partition"
   config.vm.provision :shell, :inline => "puppet module install hajee-easy_type --force"
+  # config.vm.provision :shell, :inline => "puppet resource package ruby-devel ensure=installed"
+  # config.vm.provision :shell, :inline => "puppet resource package ruby-debug ensure=installed provider=gem"
 
 end
