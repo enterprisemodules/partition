@@ -21,6 +21,13 @@ module Utils
       reset
     end
 
+    def version_check
+      output = parted '--version'
+      major, minor = output.scan(/parted \(GNU parted\) (\d+)\.(\d+)/).flatten
+      if major.to_i < 3
+        fail "This version of the partition module needs at least parted version 3.0"
+      end
+    end
 
     def list
       reset

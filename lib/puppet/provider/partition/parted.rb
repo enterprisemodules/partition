@@ -12,6 +12,7 @@ Puppet::Type.type(:partition).provide(:parted) do
 
   def self.prefetch(resources)
     parted = Utils::Parted.new
+    parted.version_check
     resources.each do |name, value|
       parted.show(value['device'] )
       parted.partitions.each do | partition |
@@ -23,6 +24,7 @@ Puppet::Type.type(:partition).provide(:parted) do
 
   def self.instances
     parted = Utils::Parted.new
+    parted.version_check
     parted.list
     parted.partitions.map do |raw_resource|
       map_raw_to_resource(raw_resource)
