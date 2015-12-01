@@ -8,7 +8,7 @@ require 'utils/parted_command'
 
 # @nodoc
 module Puppet
-  newtype(:partition_table) do
+  Type::newtype(:partition_table) do
     include EasyType
     include Utils::PartedCommand
 
