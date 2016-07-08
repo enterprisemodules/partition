@@ -1,6 +1,6 @@
 {
   "name": "enterprisemodules-partition",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "author": "Bert Hajee",
   "summary": "the custom types needed to manage partitions and partition tables.",
   "license": "Apache-2.0",
@@ -36,6 +36,7 @@
           "4",
           "5",
           "6"
+          "7"
         ]
       },
       {
