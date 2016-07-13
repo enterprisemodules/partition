@@ -32,6 +32,13 @@ RSpec::Core::RakeTask.new(:acceptance) do |t|
   t.pattern = 'spec/acceptance'
 end
 
+desc "Publish to forge on enterprismodules"
+task :publish do
+  file = Rake::FileList["./pkg/*.tar.gz"]
+  system "scp #{file} forge@forge.enterprisemodules.com:~/modules" 
+end
+
+
 desc "Run syntax, lint, and spec tests."
 task :test => [
   :syntax,
