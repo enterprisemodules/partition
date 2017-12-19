@@ -34,9 +34,9 @@ module Puppet
     #
     # Title is device/name
     #
-    map_title_to_attributes(:name, :device, :minor) do
-      /^((.*):(.*))$/
-    end
+    map_titles_to_attributes([
+      /^((.*):(.*))$/, [:name, :device, :minor]
+    ])
 
     parameter :name
     parameter :device

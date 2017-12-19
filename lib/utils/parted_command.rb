@@ -9,7 +9,7 @@ module Utils
       options = args.last.is_a?(Hash) ? args.delete_at(-1) : {}
       options.merge!({:failonfail => false})
       command = args.dup.unshift(:parted).join(' ')
-      @output = Puppet::Util::Execution.execute(command,options)
+      @output = Puppet::Util::Execution.execute(command, options)
       check_errors(@output) if @output.exitstatus != 0
       @output
     end
@@ -21,4 +21,3 @@ module Utils
   end
 
 end
-

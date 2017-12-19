@@ -1,7 +1,7 @@
 # encoding: UTF-8
 require 'pathname'
-$:.unshift(Pathname.new(__FILE__).dirname.parent.parent)
-$:.unshift(Pathname.new(__FILE__).dirname.parent.parent.parent.parent + 'easy_type' + 'lib')
+$LOAD_PATH.unshift(Pathname.new(__FILE__).dirname.parent.parent)
+$LOAD_PATH.unshift(Pathname.new(__FILE__).dirname.parent.parent.parent.parent + 'easy_type' + 'lib')
 require 'utils/parted'
 require 'utils/parted_command'
 
@@ -21,11 +21,11 @@ module Puppet
 
     set_command(:parted)
 
-    on_create do | command_builder |
+    on_create do |command_builder|
       make_partition_table
     end
 
-    on_modify do | command_builder|
+    on_modify do |command_builder|
       make_partition_table
     end
 

@@ -3,12 +3,11 @@ newparam(:name) do
   include EasyType::Validators::Name
   include EasyType::Mungers::String
 
-  desc "device name "
+  desc 'device name'
 
   isnamevar
 
-  to_translate_to_resource do | raw_resource|
+  to_translate_to_resource do |raw_resource|
     raw_resource.column_data('device')
   end
-
 end
