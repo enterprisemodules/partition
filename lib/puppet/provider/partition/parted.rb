@@ -12,11 +12,19 @@ Puppet::Type.type(:partition).provide(:parted) do
 
   def self.prefetch(resources)
     parted = Utils::Parted.new
-    resources.each do |name, value|
-      parted.show(value['device'] )
+    resources.dup.each do |name, value|
+      device = value['device']
+      device = File.realpath(device, '/dev') if File.symlink?(device)
+      if device != value['device']
+        value['device'] = device
+        resources.delete(name)
+        resources["#{device}:#{value[:minor]}"] = value
+      end
+      full_name = "#{device}:#{value[:minor]}"
+      parted.show(device)
       parted.partitions.each do | partition |
         provider = map_raw_to_resource(partition)
-        resources[name].provider = provider if provider.name == name
+        resources[full_name].provider = provider if provider.name == full_name
       end
     end
   end
