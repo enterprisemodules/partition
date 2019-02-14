@@ -10,14 +10,9 @@ module Utils
       options.merge!({:failonfail => false})
       command = args.dup.unshift(:parted).join(' ')
       @output = Puppet::Util::Execution.execute(command,options)
-      check_errors(@output) if @output.exitstatus != 0
       @output
     end
 
-    def check_errors(output)
-      return if output =~ /unrecognised disk label/
-      fail "parted failed with error #{output}"
-    end
   end
 
 end
