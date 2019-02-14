@@ -1,13 +1,12 @@
 {
   "name": "enterprisemodules-partition",
-  "version": "0.2.1",
+  "version": "0.4.0",
   "author": "Bert Hajee",
   "summary": "the custom types needed to manage partitions and partition tables.",
   "license": "Apache-2.0",
   "source": "https://github.com/enterprisemodules/partition",
   "project_page": "https://github.com/enterprisemodules/partition",
   "issues_url": "https://github.com/enterprisemodules/partition/issues",
-  "description": "the custom types needed to manage partitions and partition tables.",
   "dependencies": [
     {"name":"enterprisemodules/easy_type","version_requirement":">= 0.15.3 < 3.0.0"}
   ],

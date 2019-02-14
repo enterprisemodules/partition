@@ -1,22 +1,41 @@
-2015-03-15  Release 0.2.0
+## 2019-02-14  Release 0.4.0
+
+- Implement mkfs add-on
+- [core] Fix partition types for gpt partitions
+- [core] Remove invalid error checking
+- [partition] Puppet 4+ compatible
+- [partition_table] Add support for symlinked devices
+- [partition] Add support for symlinked devices
+- Add publish task
+- Use enterprisemodules-easy type
+- Removed deprecatio warnings for Puppet
+
+## 2015-03-15  Release 0.2.0
+
 - Back to 1 single provider, safely providing all functionality. Also for mapped devices
 
-2015-03-15  Release 0.1.0
+## ## 2015-03-15  Release 0.1.0
+
 - Added support for a single device provider. This provider allows partitioning of for example mapped devices.
 
-2015-02-04  Release 0.0.6
+## 2015-02-04  Release 0.0.6
+
 - Fix problems introduced by 0.0.5
 
-2015-02-04  Release 0.0.5
+## 2015-02-04  Release 0.0.5
+
 - Small code enhancement and fixes to creation of partitions.
 
-2015-02-03  Release 0.0.4
+## 2015-02-03  Release 0.0.4
+
 - automaticaly determine the begin and end parameters to create a partition filling the whole disk
 
 2014-10-16  Release 0.0.3
+
 - Compatible with ruby 1.9 and higer
 - fixed interpretation of lines with empty last field in partion list
 
 2014-8-06  Release 0.0.2
+
 - Fixed problems with gpt partitions
 - fixed naming of partition_tables. Now always use the full name (e.g. /dev/sda)
