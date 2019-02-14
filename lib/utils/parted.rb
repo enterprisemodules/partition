@@ -103,6 +103,7 @@ module Utils
         data = extract_content(line)
         data.map!(&:strip)
         data << @current_device_name
+        @partition_columns[6] = 'type' if @partition_type == 'gpt'
         @partitions << InstancesResults[@partition_columns.zip(data)]
       end
     end
