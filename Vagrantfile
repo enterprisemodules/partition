@@ -5,10 +5,10 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "centos-5.8-x86_64"
+  config.vm.box = "centos/7"
   # config.vm.box_url = "https://dl.dropboxusercontent.com/s/sij0m2qmn02a298/centos-5.8-x86_64.box"
 
-  config.vm.synced_folder ".", "/vagrant", :mount_options => ["dmode=777","fmode=777"]
+  config.vm.synced_folder '.', '/vagrant', type: :virtualbox
 
   config.vm.provider :virtualbox do |vb|
 
@@ -25,10 +25,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       end
     end
   end
-
-  config.vm.provision :shell, :inline => "ln -sf /vagrant /etc/puppet/modules/partition"
-  config.vm.provision :shell, :inline => "puppet resource package ruby-devel ensure=installed"
-  config.vm.provision :shell, :inline => "puppet resource package ruby-debug ensure=installed provider=gem"
-  config.vm.provision :shell, :inline => "puppet module install hajee-easy_type --force"
-
+  config.vm.provision :shell, :inline => "rpm -q puppet-release > /dev/null || yum install -y --nogpgcheck http://yum.puppetlabs.com/puppet/puppet-release-el-7.noarch.rpm"
+  config.vm.provision :shell, :inline => "rpm -q puppet-agent > /dev/null || yum install -y --nogpgcheck puppet-agent"
+  config.vm.provision :shell, :inline => "puppet module install enterprisemodules-easy_type"
+  config.vm.provision :shell, :inline => "ln -sf /vagrant /etc/puppetlabs/code/environments/production/modules/partition"
 end
