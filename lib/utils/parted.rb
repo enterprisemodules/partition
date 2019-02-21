@@ -21,6 +21,12 @@ module Utils
       reset
     end
 
+    def wait_for_device(device, device_timeout)
+      device_timeout.times do
+        return if File.exists?(device)
+        sleep 1
+      end
+    end
 
     def list
       reset
