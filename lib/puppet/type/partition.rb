@@ -39,7 +39,9 @@ module Puppet
     parameter :name
     parameter :device
     parameter :minor
-		property  :start
+    parameter :device_timeout
+
+    property  :start
 		property  :end
 		property  :fs_type
 		property  :part_type
@@ -51,8 +53,7 @@ module Puppet
 		property  :hidden
 		property  :raid
 		property  :lvm
-    # -- end of attributes -- Leave this comment if you want to use the scaffolder
-    #
+
     private
 
     def actual_start
