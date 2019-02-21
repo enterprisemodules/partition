@@ -14,6 +14,7 @@ Puppet::Type.type(:partition_table).provide(:parted) do
     parted = Utils::Parted.new
     resources.dup.each do |name, value|
       device = value['name']
+      parted.wait_for_device(device, value[:device_timeout])
       device = File.realpath(device, '/dev') if File.symlink?(device)
       if device != value['name']
         resources.delete(name)

@@ -38,7 +38,7 @@ module Puppet
     #
     parameter :name
     parameter :ensure
-    # -- end of attributes -- Leave this comment if you want to use the scaffolder
+    parameter :device_timeout
 
     #
   end
