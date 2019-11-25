@@ -20,11 +20,11 @@ module Puppet
 
     on_create do | command_builder |
       parameter = part_type ? part_type : part_name
-      "-s #{device} mkpart #{parameter} #{actual_start} #{actual_end}"
+      "-s #{device} unit #{unit} mkpart #{parameter} #{actual_start} #{actual_end}"
     end
 
     on_modify do | command_builder|
-      "-s #{device}"
+      "-s #{device} unit #{unit} "
     end
 
     on_destroy do |command_builder|
@@ -40,6 +40,7 @@ module Puppet
     parameter :device
     parameter :minor
     parameter :device_timeout
+    parameter :unit
 
     property  :start
 		property  :end

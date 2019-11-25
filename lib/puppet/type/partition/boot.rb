@@ -19,7 +19,7 @@ newproperty(:boot) do
   end
 
   on_apply do | command_builder |
-    "set #{resource[:minor]} boot"
+    resource[:boot] ? "set #{resource[:minor]} boot on" : "set #{resource[:minor]} boot off"
   end
 
 
