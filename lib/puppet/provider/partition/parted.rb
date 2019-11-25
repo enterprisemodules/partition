@@ -22,7 +22,7 @@ Puppet::Type.type(:partition).provide(:parted) do
         resources["#{device}:#{value[:minor]}"] = value
       end
       full_name = "#{device}:#{value[:minor]}"
-      parted.show(device)
+      parted.show(device, value['unit'].to_s)
       parted.partitions.each do | partition |
         provider = map_raw_to_resource(partition)
         resources[full_name].provider = provider if provider.name == full_name

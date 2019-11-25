@@ -15,7 +15,7 @@ newproperty(:lvm) do
   end
 
   on_apply do | command_builder |
-    "set #{resource[:minor]} lvm"
+    resource[:lvm] ? "set #{resource[:minor]} lvm on" : "set #{resource[:minor]} lvm off"
   end
 
 

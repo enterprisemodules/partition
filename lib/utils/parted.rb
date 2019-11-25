@@ -34,9 +34,9 @@ module Utils
       parse_output
     end
 
-    def show(device)
+    def show(device, unit = 'mb')
       reset
-      @output= parted device, 'print'
+      @output= parted device, "unit #{unit} print"
       parse_output
     end
 
