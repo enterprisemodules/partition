@@ -1,3 +1,8 @@
+## 2019-12-02  Release 0.6.0
+
+- [partition] Manage resources by unit
+- [device_timeout] Include EasyType
+
 ## 2019-02-21  Release 0.5.0
 
 - [partition_table] Add support for device_timeout parameter
