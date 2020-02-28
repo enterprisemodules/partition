@@ -296,7 +296,7 @@ GEM
       puppet-syntax (~> 2.0)
       rspec-puppet (~> 2.0)
     rainbow (3.0.0)
-    rake (12.3.2)
+    rake (13.0.1)
     rb-readline (0.5.5)
     rbvmomi (1.13.0)
       builder (~> 3.0)
